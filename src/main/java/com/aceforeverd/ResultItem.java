@@ -59,7 +59,7 @@ public class ResultItem {
     @Override
     public String toString() {
         return "{" +
-                "name:" + name +
+                "name:" + name.getName() +
                 ", income:" + income +
                 ", expend:" + expend +
                 ", time:" + time +

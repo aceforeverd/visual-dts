@@ -6,7 +6,7 @@ import java.util.HashMap;
 
 public class Results {
     private String time;
-    private HashMap<Currency, ResultItem> resultMap;
+    private HashMap<Currency, ResultItem> resultMap = new HashMap<>();
 
     Results(String t) {
         time = t;
@@ -18,14 +18,14 @@ public class Results {
 
     public void add(Order order) {
         if (order.getTime().equals(time)) {
-            ResultItem item1 = resultMap.get(order.getInitator());
-            item1.setExpend(item1.getExpend() + order.getTurnover());
-            resultMap.replace(order.getInitator(), item1);
+            ResultItem item1 = resultMap.get(order.getSrc());
+            item1.setExpend(item1.getExpend() + order.getValue());
+            resultMap.replace(order.getSrc(), item1);
 
-            ResultItem item2 = resultMap.get(order.getRecipient());
-            // TODO enable currency rate
-            item2.setIncome(item2.getIncome() + order.getTurnover());
-            resultMap.replace(order.getRecipient(), item2);
+            ResultItem item2 = resultMap.get(order.getDst());
+            item2.setIncome(item2.getIncome()
+                    + CurrencyRate.convert(order.getValue(), order.getDst(), order.getSrc(), order.getTime()) );
+            resultMap.replace(order.getDst(), item2);
         }
     }
 

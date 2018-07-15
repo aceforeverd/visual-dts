@@ -15,7 +15,11 @@ public class CurrencyRate {
         rates.put(Currency.EUR, 6.0);
     }
 
-    public static double CurrencyRate(Currency c, String time) {
+    public static double convert(double value, Currency dst, Currency src, String time) {
+        return value * getCurrencyRate(dst, time) / getCurrencyRate(src, time);
+    }
+
+    public static double getCurrencyRate(Currency c, String time) {
         return 0.1 * CurrencyRate.sub(time, startTime) + rates.get(c);
     }
 

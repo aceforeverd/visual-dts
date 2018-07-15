@@ -3,53 +3,54 @@ package com.aceforeverd;
 import org.bson.Document;
 
 public class Order {
-    private Currency initator;
+    private Currency src;
 
-    private Currency recipient;
+    private Currency dst;
 
-    private double turnover;
+    private double value;
 
     private String time;
 
     private String date;
 
-    public Order(Currency initator, Currency recipient, double turnover, String time) {
-        this.initator = initator;
-        this.recipient = recipient;
-        this.turnover = turnover;
+    public Order(Currency src, Currency dst, double value, String time) {
+        this.src = src;
+        this.dst = dst;
+        this.value = value;
         this.time = time;
         this.date = time.substring(16);
     }
 
     public Order(Document doc) {
-        this.initator = Currency.getCurrency(doc.getString("src_name"));
-        this.recipient = Currency.getCurrency(doc.getString("dst_name"));
-        this.turnover = doc.getDouble("value");
+        this.src = Currency.getCurrency(doc.getString("src_name"));
+        this.dst = Currency.getCurrency(doc.getString("dst_name"));
+        this.value = doc.getDouble("value");
         this.time = doc.get("time", String.class);
+        this.date = time.substring(16);
     }
 
-    public Currency getInitator() {
-        return initator;
+    public Currency getSrc() {
+        return src;
     }
 
-    public void setInitator(Currency initator) {
-        this.initator = initator;
+    public void setSrc(Currency src) {
+        this.src = src;
     }
 
-    public Currency getRecipient() {
-        return recipient;
+    public Currency getDst() {
+        return dst;
     }
 
-    public void setRecipient(Currency recipient) {
-        this.recipient = recipient;
+    public void setDst(Currency dst) {
+        this.dst = dst;
     }
 
-    public double getTurnover() {
-        return turnover;
+    public double getValue() {
+        return value;
     }
 
-    public void setTurnover(double turnover) {
-        this.turnover = turnover;
+    public void setValue(double value) {
+        this.value = value;
     }
 
     public String getTime() {
@@ -71,9 +72,9 @@ public class Order {
     @Override
     public String toString() {
         return "{" +
-                "initator: " + initator +
-                ", recipient: " + recipient +
-                ", turnover: " + turnover +
+                "src_name: " + src.getName() +
+                ", dst_name: " + dst.getName() +
+                ", value: " + value +
                 ", time: " + time +
                 '}';
     }

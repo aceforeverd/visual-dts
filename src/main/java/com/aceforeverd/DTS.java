@@ -3,7 +3,6 @@ package com.aceforeverd;
 import com.mongodb.spark.MongoSpark;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.common.serialization.StringDeserializer;
-import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.sql.SparkSession;
 import org.apache.spark.streaming.Durations;
@@ -20,7 +19,7 @@ import java.util.*;
 public class DTS {
     public static void main(String[] args) {
         // JavaSparkContext sc
-        SparkConf conf = new SparkConf().setAppName("dts");
+        // SparkConf conf = new SparkConf().setAppName("dts");
         // JavaStreamingContext jsc = new JavaStreamingContext(conf, Durations.seconds(2));
         SparkSession spark =
             SparkSession.builder()
@@ -29,10 +28,10 @@ public class DTS {
                 .config("spark.mongodb.output.uri", "mongodb://10.138.0.2:27017/test.dts")
                 .getOrCreate();
         JavaSparkContext sc = new JavaSparkContext(spark.sparkContext());
-        JavaStreamingContext ssc = new JavaStreamingContext(sc, Durations.minutes(1));
+        JavaStreamingContext ssc = new JavaStreamingContext(sc, Durations.minutes(100));
 
         Map<String, Object> kafkaParams = new HashMap<>();
-        kafkaParams.put("bootstrap.servers", "10.138.0.2:9092");
+        kafkaParams.put("bootstrap.servers", "master:9092");
         kafkaParams.put("key.deserializer", StringDeserializer.class);
         kafkaParams.put("value.deserializer", StringDeserializer.class);
         kafkaParams.put("group.id", "kafka_order");
@@ -41,7 +40,7 @@ public class DTS {
 
         JavaInputDStream<ConsumerRecord<String, String>> stream =
             KafkaUtils.createDirectStream(ssc, LocationStrategies.PreferConsistent(),
-                ConsumerStrategies.<String, String>Subscribe(Arrays.asList("order"), kafkaParams));
+                ConsumerStrategies.<String, String>Subscribe(Collections.singleton("order"), kafkaParams));
 
         stream
             .map(record -> {
