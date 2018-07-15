@@ -30,6 +30,6 @@ public class KafkaProducerConfig {
 
     @Bean
     public KafkaTemplate<String, Order> kafkaTemplate() {
-        return new KafkaTemplate<String, Order>(producerFactory());
+        return new KafkaTemplate<String, Order>(new DefaultKafkaProducerFactory<String, Order>(new HashMap<>()));
     }
 }

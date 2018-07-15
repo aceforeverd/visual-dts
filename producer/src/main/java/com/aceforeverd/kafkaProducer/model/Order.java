@@ -1,9 +1,6 @@
 package com.aceforeverd.kafkaProducer.model;
 
 
-import lombok.Data;
-
-@Data
 public class Order {
     private String src;
 
