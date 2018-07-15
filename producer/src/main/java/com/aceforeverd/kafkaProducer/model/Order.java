@@ -53,11 +53,11 @@ public class Order {
 
     @Override
     public String toString() {
-        return "Order{" +
-                "src='" + src + '\'' +
-                ", dst='" + dst + '\'' +
-                ", value=" + value +
-                ", time='" + time + '\'' +
+        return "{" +
+                "src:" + src +
+                ", dst:" + dst +
+                ", value:" + value +
+                ", time:" + time +
                 '}';
     }
 }
