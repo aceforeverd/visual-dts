@@ -12,10 +12,10 @@ public class KafkaService {
     private String topic;
 
     @Autowired
-    private KafkaTemplate<String, Order> template;
+    private KafkaTemplate<String, String> template;
 
     public String handleOrder(Order order) {
-        template.send(topic, order);
+        template.send(topic, order.toString());
         return "OK";
     }
 }

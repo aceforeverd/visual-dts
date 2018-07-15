@@ -50,4 +50,14 @@ public class Order {
     public void setTime(String time) {
         this.time = time;
     }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "src='" + src + '\'' +
+                ", dst='" + dst + '\'' +
+                ", value=" + value +
+                ", time='" + time + '\'' +
+                '}';
+    }
 }
