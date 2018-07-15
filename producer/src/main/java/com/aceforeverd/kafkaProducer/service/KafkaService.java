@@ -15,7 +15,7 @@ public class KafkaService {
     private KafkaTemplate<String, Order> kafkaTemplate;
 
     public String handleOrder(Order order) {
-        kafkaTemplate.send(topic, "hello", order);
+        kafkaTemplate.send(topic, order);
         return "OK";
     }
 }
